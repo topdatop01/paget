@@ -1,0 +1,2 @@
+# paget
+Arch Linux Installer
