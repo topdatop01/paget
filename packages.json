@@ -1,5 +1,16 @@
 {
   "packages": {
-    "fsdf"
+    "paget_ping": {
+      "display_name": "Paget ping",
+      "description": "Test app",
+      "package_url": "https://example.com",
+      "version": "1.0",
+      "requirements": {
+        "paget_pong": "1.0"
+      },
+      "chmod": {
+        "bin/paget_ping": "+x"
+      }
+    }
   }
 }
