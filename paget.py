@@ -63,6 +63,8 @@ def download_packet(packet_to_install):
     if not app_id in packages_list["packages"]:
         print(f"{RED}[!] Error: {RESET}Package not found{RESET}")
 
+    packages_list["packages"]
+
     
 
 def compile_packages(type_of, args):
