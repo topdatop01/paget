@@ -9,7 +9,7 @@
         "paget_pong": "1.0"
       },
       "chmod": {
-        "bin/paget_ping": "0o755"
+        "bin/paget_ping": 755
       }
     },
     "paget_pong": {
@@ -21,7 +21,7 @@
         "paget_ping": "1.0"
       },
       "chmod": {
-        "bin/paget_pong": "0o755"
+        "bin/paget_pong": 755
       }
     }
   }
