@@ -4,9 +4,9 @@
       "display_name": "Paget ping (Test app)",
       "description": "Test app",
       "package_url": "https://github.com/topdatop01/paget/raw/refs/heads/packages/packages/paget_ping.tar.gz",
-      "version": "1.0",
+      "version": 1.0,
       "requirements": {
-        "paget_pong": "1.0"
+        "paget_pong": 1.0
       },
       "chmod": {
         "bin/paget_ping": "755"
@@ -16,9 +16,9 @@
       "display_name": "Paget pong (Test app)",
       "description": "Test app",
       "package_url": "https://github.com/topdatop01/paget/raw/refs/heads/packages/packages/paget_pong.tar.gz",
-      "version": "1.0",
+      "version": 1.0,
       "requirements": {
-        "paget_ping": "1.0"
+        "paget_ping": 1.0
       },
       "chmod": {
         "bin/paget_pong": "755"
