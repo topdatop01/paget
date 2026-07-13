@@ -111,6 +111,9 @@ def download_and_extract_package(url, package_name):
     else:
         return None
 
+def remove_packet(packet):
+    ...
+
 def download_packet(packet_to_install):
     app_id = packet_to_install.lower()
 
@@ -143,20 +146,63 @@ def download_packet(packet_to_install):
     metadatas.mkdir(755, parents=True, exist_ok=True)
 
     app_data = packages_list["packages"][app_id]
-    instaled = metadatas / app_id + ".json"
+    instaled = metadatas / (app_id + ".json")
     instaled = instaled.is_file()
 
     to_download = [[app_data["package_url"], app_id, instaled]]
+    req_list = {}
 
-    for i in app_data["requirements"]:
-        instaled = metadatas / i + ".json"
-        instaled = instaled.is_file()
-        to_download.append([packages_list["packages"][i]["package_url"], i, instaled])
+    def collect_all_dependencies(pkg_name, packages_list, visited=None, to_download=None, req_list=None):
+        if visited is None:
+            visited = set()
+        if to_download is None:
+            to_download = []
+        if req_list is None:
+            req_list = {}
+        
+        # Защита от циклов
+        if pkg_name in visited:
+            return to_download, req_list
+        
+        visited.add(pkg_name)
+        
+        # Получаем данные пакета
+        pkg_data = packages_list["packages"].get(pkg_name)
+        if not pkg_data:
+            return to_download, req_list
+        
+        # Проверяем, установлен ли
+        is_installed = (metadatas / f"{pkg_name}.json").is_file()
+
+        if is_installed:
+
+        
+        # Добавляем пакет, если его ещё нет
+        if not any(pkg[1] == pkg_name for pkg in to_download):
+            to_download.append([pkg_data["package_url"], pkg_name, is_installed])
+        
+        # Обновляем версию
+        version = pkg_data.get("version", "1.0")
+        if pkg_name not in req_list or req_list[pkg_name] < version:
+            req_list[pkg_name] = version
+        
+        # Обрабатываем зависимости (рекурсивно)
+        for dep_name, dep_version in pkg_data.get("requirements", {}).items():
+            # Обновляем версию зависимости
+            if dep_name not in req_list or req_list[dep_name] < dep_version:
+                req_list[dep_name] = dep_version
+            
+            # Рекурсивный вызов
+            collect_all_dependencies(dep_name, packages_list, visited, to_download, req_list)
+        
+        return to_download, req_list
+    
+    to_download, req_list = collect_all_dependencies(app_id, packages_list)
 
     print("\n------------------ PACKAGES ---------------------\n")
 
     for i in to_download:
-        print(f"    {"[INSTALED]" if i[2] == True else ""}{packages_list["packages"][i[1]]["display_name"]} - {packages_list["packages"][i[1]]["version"]}")
+        print(f"    {"[INSTALED]" if i[2] == True else ("[UPDATE]" if i[2] == 2 else "")}{packages_list["packages"][i[1]]["display_name"]} - {packages_list["packages"][i[1]]["version"]}")
 
     print()
 
@@ -168,7 +214,13 @@ def download_packet(packet_to_install):
             quit()
 
     for i in to_download:
-        files = download_and_extract_package(i[0], i[1], i[2], packages_list)
+        if i[2] == True:
+            print(f"{GREEN}[✓] Successfully: {RESET}{package_data["display_name"]} already installed!{RESET}")
+
+        if i[2] == 2:
+            
+
+        files = download_and_extract_package(i[0], i[1])
 
         if files != None:
             print(f"{YELLOW}[*] Process: {RESET}Giving permisions...{RESET}")
@@ -242,6 +294,9 @@ def compile_packages(type_of, args):
     for package in args:
         if type_of == "install":
             download_packet(package)
+        elif type_of == "remove":
+            remove_packet()
+        elif type_of == "update"
 
 def show_help():
     """Выводит справочную информацию"""
@@ -286,9 +341,16 @@ if __name__ == "__main__":
         if action == "install":
             compile_packages("install", argument)
         elif action == "remove":
-            remove_package(argument)
+            compile_packages("remove", argument)
         elif action == "search":
-            search_package(argument)
+            compile_packages("search", argument)
+
+    elif action == "update":
+        if len(sys.argv) < 3:
+            compile_packages("update", ["all"])
+        else:
+            argument = sys.argv[2:]
+            compile_packages("update", argument)
 
     # 4. Обработка неизвестного ввода
     else:
