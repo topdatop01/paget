@@ -1,5 +1,15 @@
 {
   "packages": {
+    "paget": {
+      "display_name": "Paget",
+      "description": "Package manager",
+      "package_url": "https://github.com/topdatop01/paget/raw/refs/heads/packages/packages/paget.tar.gz",
+      "version": 1.0,
+      "requirements": {},
+      "chmod": {
+        "bin/paget": "755"
+      }
+    },
     "paget_ping": {
       "display_name": "Paget ping (Test app)",
       "description": "Test app",
