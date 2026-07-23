@@ -7,7 +7,6 @@
       "version": 1.0,
       "requirements": {
         "paget_pong": 1.0,
-        "paget_peng": 1.0
       },
       "chmod": {
         "bin/paget_ping": "755"
@@ -23,18 +22,6 @@
       },
       "chmod": {
         "bin/paget_pong": "755"
-      }
-    },
-    "paget_peng": {
-      "display_name": "Paget peng (Test app)",
-      "description": "Test app",
-      "package_url": "https://github.com/topdatop01/paget/raw/refs/heads/packages/packages/paget_pong.tar.gz",
-      "version": 1.0,
-      "requirements": {
-        "paget_ping": 1.0
-      },
-      "chmod": {
-        "bin/paget_peng": "755"
       }
     }
   }
