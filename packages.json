@@ -17,7 +17,7 @@
       "display_name": "Paget pong (Test app)",
       "description": "Test app",
       "package_url": "https://github.com/topdatop01/paget/raw/refs/heads/packages/packages/paget_pong.tar.gz",
-      "version": 1.1,
+      "version": 1.2,
       "requirements": {
         "paget_ping": 1.0
       },
